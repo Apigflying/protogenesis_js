@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{
+				width:100px;
+				height:30px;
+				margin:30px auto;
+				border:1px solid #000000;
+				overflow: hidden;
+				position: relative;
+			}
+			.box div{
+				position: absolute;
+				white-space: nowrap;
+				left:0;
+			}
+			.box span{
+				display:inline-block;
+				height:30px;
+				line-height: 30px;
+				white-space: nowrap;
+				margin-right:20px;
+			}
+			.showAll{
+				animation:showAll 5s infinite linear;
+			}
+			@keyframes showAll{
+				0%{
+					/*transfrom的移动是根据自身的宽度的百分比进行移动,而left,top等的移动是相对于定位父级的宽度的百分比进行移动的*/
+					
+					transform: translateX(0);
+				}
+				80%{
+					transform: translateX(-50%);
+				}
+				100%{
+					transform: translateX(-50%);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div>
+				<span >迪卡乐时辅导教师卡拉干很多快乐</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var $=function(select){
+				return document.querySelector(select);
+			}
+			if($('.box span').scrollWidth>=$('.box').getBoundingClientRect().width){
+				$('.box div').classList.add('showAll');
+				$('.box div').style.width=$('.box span').getBoundingClientRect().width*2+40+'px';
+				$('.box div').appendChild($('.box span').cloneNode(true))
+			}
+		</script>
+	</body>
+</html>

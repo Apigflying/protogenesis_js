@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+//  	window.onload=function(){
+//  		var oUl=document.getElementsByTagName('ul');
+//  		var oLi=document.getElementsByTagName('li');
+//  		
+//  		var str="";
+//  		for(var i=0;i<10;i++){
+//  			str+='<li>'+i+'</li>';
+//  		}
+//  		oUl[0].innerHTML=str;
+//  		for(var i=0;i<oLi.length;i++){
+//  			oLi[i].style.left=i*50+'px';
+//  			
+//  			if(i<5){
+//  				oLi[i].style.top=i*50+'px';
+//  			}
+//  			else{
+//  				oLi[i].style.top=([oLi.length]-i-2)*50+'px';
+//  			}
+//  		}
+//  	}
+//prompt
+//parseInt
+//		var a=parseFloat(prompt('请输入汽油编号'));
+//		var b=parseInt(prompt('请输入加油升数'));
+//		var c=6*b;
+//		var d=5.9*b;
+//		var e=7*b;
+//		var f=6.95*b;
+//		
+//		if (a==92) {
+//			if(b<20){
+//				alert('您需要交'+c+'元');
+//			}
+//			else{
+//				alert('您需要交'+d+'元');
+//			}
+//		}
+//		else if(a==97){
+//			if(b<30){
+//				alert('您需要交'+e+'元');
+//			}
+//			else{
+//				alert('您需要交'+f+'元');
+//			}
+//		}
+//		else{
+//			alert('输入有误，请输入汽油编号')
+//		}
+//		var a=parseFloat(prompt('请输入汽油编号'));
+//		var b=parseInt(prompt('请输入加油升数'));
+//		var parse="";
+//		if (a==92) {
+//			if(b<20){
+//				parse=6*b;
+//			}
+//			else{
+//				parse=5.9*b;
+//			}
+//			alert('您需要交'+parse+'元');
+//		}
+//		else if(a==97){
+//			if(b<30){
+//				parse=7*b;
+//			}
+//			else{
+//				parse=6.95*b;
+//			}
+//			alert('您需要交'+parse+'元');
+//		}
+//		
+//		else{
+//			alert('输入有误，请输入汽油编号')
+//		}
+		
+//var c=parseFloat("请输入摄氏度");
+//var f=9/5*c+32;
+//console.log(f);
+//		var a=parseFloat(prompt('请输入体重KG'));
+//		var b=parseFloat(prompt('请输入身高数以米为单位'));
+//		
+//		var c=a/Math.pow(b,2);
+//		if (c>32) {
+//			alert(c);
+//			alert("体重过轻");
+//		} 
+//		else if(c>28){
+//			alert(c);
+//			alert('正常');
+//		}
+//		else if(c>25){
+//			alert(c);
+//			alert('过重');
+//		}
+//		else if(c>=18){
+//			alert(c);
+//			alert('肥胖');
+//		}
+//		else if(c<18){
+//			alert(c);
+//			alert('非常胖');
+//			alert('请减肥');
+//		}
+//		var a=parseInt(prompt('请输入工作年限'));
+//		var b=parseFloat(prompt('月工资'));
+//		var c="";
+//		if(a<1){
+//			if(b<8000){
+//				c=b;
+//			}
+//			else{
+//				c=1.2*b;
+//			}
+//		}
+//		else if(a<2){
+//			if(b<10000){
+//				c=1.5*b;
+//			}
+//			else{
+//				c=1.7*b;
+//			}
+//		}
+//		else if(a>=2){
+//			if(b<12000){
+//				c=3*b;
+//			}
+//			else{
+//				c=3.2*b;
+//			} 
+//		}
+//		alert('您的年终奖金额为'+c+'元')
+//		var a=2;
+//		if(a<4) alert('lll');
+//		var i=prompt('输入数字');
+//		if(i%5==0 && i%6==0){
+//			alert('1');
+//		}
+//		else if(i%5==0){
+//			alert('2');
+//		}
+//		else if(i%6==0){
+//			alert('3');
+//		}
+//		for(i=1;i<=60;i++){
+//			if(i%7!=0 && (i-7)%10!=0){
+//				console.log(i);
+//			}
+//		}
+//		for(var a=0;a<=9;a++){
+//			for(var b=0; b<=9; b++){
+//				for(var c=0; c<=9;c++){
+//					if(Math.pow(a,3)+Math.pow(b,3)+Math.pow(c,3)==100*a+10*b+c){
+//						console.log(100*a+10*b+c);
+//					}
+//				}
+//			}
+//		}
+
+//		for(var i=100;i<999;i++){
+//			var a=parseInt(i/100);
+//			var b=parseInt(i%100/10);
+//			var c=i%10;
+//			var d=100*a+10*b+c;
+//			if(Math.pow(a,3)+Math.pow(b,3)+Math.pow(c,3)==d){
+//				console.log(i);
+//			}
+//		}
+//		if(i.length>2){
+//			alert('不是质数')
+//		}
+//		else{
+//			alert ('是质数')
+//		}
+		
+//		for(i=3;i<20;i+=2){
+//			if(i%3==2){
+//				i=i+1
+//			}
+//			else{
+//				i=i+2
+//			}
+//			console.log(i)
+//		}
+//		var a=Math.pow((23+Math.pow(5,7))/45,2);
+//		console.log(a)
+//		3015856.7427160493
+//		var a=parseFloat(prompt("六边形的边长"));
+//		var b=3*Math.sqrt(3)/2*Math.pow(a,2);
+//		console.log(b);
+//		var day=prompt("输入");
+//		var a=day%7
+//		var b=(a+6)%7
+//		console.log(b)
+//		var a=prompt("请输入三位数字");
+//		var b=(a-a%100)/100;
+//		var c=(a-(a-a%100)-(a-(a-a%100))%10)/10;
+//		var d=(a-(a-a%100) )%10;
+//		console.log(b+c+d)
+//var a=parseInt(prompt('请输入数字'));
+//var amount=0;
+//		for(var i=1;i<=a;i++){
+//			if(a%i==0){
+//				amount++;
+//			}
+//		}
+//		console.log(amount);
+//		M('妈的智障','我是你爹');
+//		function M(a,c){
+//			console.log(a);
+//		}
+//console.log(S(23));
+//
+//		function M(a){
+//			var b=0;
+//			for(var i=1; i<=a;i++){
+//				if(a%i==0){
+//					b++;
+//				}
+//			}
+//			return b;
+//		}
+//		function S(a){
+////			var b=0;
+////			for(var i=1; i<=a;i++){
+////				if(a%i==0){
+////					b++;
+////				}
+////			}
+//			if(M(a)==2){
+//				return true;
+//			}
+//			else{
+//				return false;
+//			};
+//		}
+		
+		
+//		function m(a){
+//			for(var i=1;i<a;i++){
+//				if(a%i==0){
+//					return i
+//				}
+//			}
+//		}
+//	for(var i=1;i<=1000; i++){
+//	if(d(i)){
+//		console.log(i);
+//	}
+//}
+//		for(var i=1; i<1000;i++){
+//			if(pd(i)){
+//				console.log(i)
+//			}
+//		}
+//		function fs(a){
+//			return parseInt(a/100);
+//		}
+//		function sd(a){
+//			return parseInt(a%100/10);
+//		}
+//		function th(a){
+//			return a%10
+//		}
+//		function pd(a){
+//			var b=fs(a);
+//			var c=sd(a);
+//			var d=th(a); 
+//			if(a==Math.pow(b,3)+Math.pow(c,3)+Math.pow(d,3)){
+//				return true;
+//			}
+//			else{
+//				return false;
+//			}
+//		}
+	
+//	for(var i=1;i<=10000;i++){
+//		if(c(i)){
+//			console.log(i);
+//		}
+//	}
+//	
+//		function a(num){
+//			var b=0;
+//			for(var i=1; i<=num;i++){
+//				if(num%i==0){
+//					b++
+//				}
+//			}
+//			return b;
+//		}
+//		function c(num){
+//			if(a(num)==2){
+//				return true;
+//			}
+//			else{
+//				return false;
+//			}
+//		}
+//		for(var i=1;i<10000;i++){
+//			if(i==m(i)){
+//				console.log(i);
+//			}
+//		}
+//		function m(a){
+//			var b=0;
+//			for(var i=1;i<a;i++){//i<16;i++
+//				if(a%i==0){
+//					b+=i;//1+2+4++8+16
+//				}
+//			}
+//			return b;
+//		}
+//window.onload=function(){
+//		var ipt=document.getElementsByTagName('input');
+//		for(var i=0;i<ipt.length;i++){
+//			ipt[i].onclick=m(60);
+////				this.style.cssText='color:yellow;width:40px;;background:red;'
+//		}
+//		function m(a){
+//			this.style.cssText='color:yellow;width:'+a+'px;;background:red;'
+//		}
+//	}
+		window.onload=function(){
+			var oli=document.getElementsByTagName('li');
+			for(var i=0;i<oli.length;i++){
+				oli[i].onoff=true;
+				oli[i].onclick=function(){
+					if(this.onoff){
+					this.style.backgroundImage='url(img/9.jpg)';
+					this.onoff=false;
+				}
+					else{
+					this.style.backgroundImage='url(img/10.jpg)';
+					this.onoff=true
+					}
+				}
+			}
+		}
+    </script>
+	<style>
+		li{
+			float: left;
+			width:400px;
+			height:233px;
+			background-image: url(img/10.jpg);
+			background-size: contain;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>
+		</li>
+		<li>
+		</li>
+		<li>
+		</li>
+	</ul>
+</body>
+</html>

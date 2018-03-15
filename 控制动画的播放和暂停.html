@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			.box{
+				width:100px;
+				height:100px;
+				background: red;
+				animation:rotating 3s linear infinite;
+				animation-play-state: paused;
+			}
+			.active{
+				animation-play-state: running;
+			}
+			@keyframes rotating{
+				0{transform: rotate(0deg)}
+				100%{transform: rotate(360deg)}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		<input type="button" id="btn" value="play" />
+		<input type="button" id="pause" value="pause" />
+		<script type="text/javascript">
+			var box=document.querySelector('.box');
+			btn.onclick=function(){
+				box.classList.add('active');
+			}
+			pause.onclick=function(){
+				box.classList.remove('active');
+			}
+		</script>
+	</body>
+</html>
