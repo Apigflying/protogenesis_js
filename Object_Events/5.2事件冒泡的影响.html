@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width:100px;
+				height:400px;
+				border:1px solid red;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" name="btn" id="btn" value="按钮" />
+		<div></div>
+		<script type="text/javascript">
+			var btn=document.getElementById('btn');
+			var div=document.querySelector('div');
+			
+//			btn.onclick=function(){
+//				div.style.display='block';
+//			}
+//			document.onclick=function(){
+//				div.style.display='';
+//			}
+//			模拟下拉菜单
+//			
+//			需求:当点击按钮的时候,让div显示,当点击页面其他任意地方的时候,让这个div隐藏
+//			
+//			上面的代码无法让div显示
+//			
+//			原因是:当点击btn时,btn的点击事件会向祖先传递,直到传递到document
+//			
+//			如果document本身没有  任何事件(如:onclick或者onmouseover)  去触发
+//			
+//			那么什么都不会发生
+//			
+//			但是此时的document有点击事件,这就会造成btn被点击时,也会触发document的   点击事件(如果此时的document的事件不是onclick而是onmouseover等,即两个事件不冲突的时候,是没有影响的,也就是说如果两个事件相同，冒泡机制会在起冲突的时候，执行完子元素的点击事件之后的同时，执行祖先元素的点击事件，所以该子元素的点击事件会直接被覆盖掉)
+			
+			
+			//取消元素身上的冒泡机制的方法：
+			//在该事件执行的时候,将该事件的cancelBubble属性设置为true
+			//即:ev.cancelBubble=true;
+			//添加之后,此时的该事件触发的时候,就不会向上传递
+			
+//			**cancelBubble的默认值是false,cancelBubble阻止的是“当前对象”的“当前事件”的冒泡现象**
+
+//			如果当前对象的触发事件为onclick,并且给这个onclick事件触发的函数添加cancelBubble=true,那么再给这个对象添加onmouseover事件时,这个onmouseover事件的冒泡机制没有被取消掉
+			
+			btn.onclick=function(ev){
+				var ev=ev||event;
+				ev.cancelBubble=true;//无法取消btn的onmouseover事件的冒泡机制
+				div.style.display='block';
+			}
+			document.onclick=function(){
+				div.style.display='';
+			}
+			
+		</script>
+	</body>
+</html>

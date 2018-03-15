@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试专用</title>
+  <style>
+  	div{
+  		width:100px;
+  		height:100px;
+  		background: red;
+  		position:absolute;
+  		line-height:100px;
+  		text-align:center;
+  		font-size:40px;
+  		color:yellow;
+  	}
+  </style>
+</head>
+<body style="">
+		<div id="box">111</div>
+	  <script type="text/javascript">
+	  	class Drag{
+	  		constructor(ele){
+	  			this.ele=ele;
+	  			this.init();
+	  		}
+	  		init(){
+	  			this.disX=this.disY=0;
+	  			console.log(this)
+	  			this.ele.addEventListener('mousedown',this.fnDown.bind(this));
+	  		}
+	  		fnDown(e){
+	  			this.disX=e.clientX-this.ele.offsetLeft;
+	  			this.disY=e.clientY-this.ele.offsetTop;
+	  			this.move=this.fnMove.bind(this);
+	  			this.up=this.fnUp.bind(this);
+	  			document.addEventListener('mousemove',this.move);
+	  			document.addEventListener('mouseup',this.up);
+	  		}
+	  		fnMove(e){
+	  			this.ele.style.left=e.clientX-this.disX+'px';
+	  			this.ele.style.top=e.clientY-this.disY+'px';
+	  		}
+	  		fnUp(){
+	  			document.removeEventListener('mousemove',this.move);
+	  		}
+	  	}
+	  	var box=document.getElementById("box");
+	  	
+	  	new Drag(box);
+ 		</script>
+</body>
+</html>

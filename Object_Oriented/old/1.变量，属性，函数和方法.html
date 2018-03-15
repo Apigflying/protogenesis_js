@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			1.变量和自定义属性的区别
+			var arr=[1,2,3,4,5,6];
+			var a=12;
+			arr.a=12;
+		
+			这两个a的区别：
+				var 声明的变量是全局的，谁能能用，自由自在
+				arr.a的这个a是arr对象下的一个自定义的属性，只有arr对象能够使用
+			
+			2.函数和方法
+			function fn(){} 	这是一个函数
+			arr.fn=function(){} 	这是一个方法，是数组的方法。类似于arr.push();
+			
+			和上面的变量和自定义属性类似，函数是自由的，谁都能够调用
+			方法属于一类对象，如字符串的方法和数组的方法
+				
+			3.this
+			
+				一个函数，不被调用的时候是没有this的，当函数被（事件：onclick等）调用的时候，这个函数就成了方法，而在这个方法内的this，就是指当前的方法属于谁，this就是谁
+				
+				栗子1：
+					function ab(){}----函数
+					btn.onclick=ab;----方法
+					
+				关于this在函数内的指向问题
+					在全局内用var声明的变量和function写在全局内，没有事件调用，它们都是window的自定义属性
+						即：
+							var a=2;
+							window.a----2
+							
+							function a(){alert（this）}
+							window.a----上面整个函数
+							window.a()=a()----this就是window（因为这个方法在全局内声明，就是window 的方法）
+							
+							
+			
+			4.object对象
+			自己建立一个对象var obj=new Object();
+				可以给这个对象添加（自定义）属性：obj.name='blue';
+				也可以给这个对象添加方法:obj.showName=function(){alert(this.name)}
+				
+				
+		</p>
+		<script type="text/javascript">
+			var obj=new Object();
+			
+		</script>
+	</body>
+</html>

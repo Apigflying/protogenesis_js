@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			class Animal{
+				constructor(name){
+					this.name = name
+				}
+				getName(){
+					return this.name
+				}
+			}
+			//继承
+			class Dog extends Animal{
+				constructor(name){
+					super(name)//利用super调用父类的constructor
+					
+				}
+				sayVoice(){
+					return 'ooo'
+				}
+			}
+			var dog = new Dog('sandi')
+			console.log(dog.getName() + ' say '+ dog.sayVoice())
+			
+		</script>
+	</body>
+</html>

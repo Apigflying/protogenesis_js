@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			1.document.createElement('div');
+			
+			创建节点
+				用变量保存，然后可以将这个节点放入到某个元素内
+				括号内是元素的类型
+			
+				当创建的节点类型是input时，如果不设置，那么这个input的类型就是text
+					用ele.setAttribute('type','button');
+					ele.setAttribute('value','按钮')；
+			
+			2.parentNode.appendChlid(btn);
+				
+				将创建的元素，或者原本存在的元素，*剪切*到这个元素的里面，成为这个元素的lastElementChild
+				
+			3.parentNode.insertBefore(要剪切的元素，parentNode的子节点)
+				将要剪切的元素 	放到		parentNode的子节点		的前面
+				如果parentNode的子节点	 这个位置填null，那么它就和appendChild()的结果一样
+				如果每次将		要剪切的元素	都往parentNode内第一个元素添加。可以用parentNode(要剪切的元素,parentNode.firstElementChild)
+				
+			4.parentNode.removeChild(node)
+				移除parentNode下面的某个子节点
+				执行后的返回值是被删除的节点
+				可以将删除的节点保存起来，进行操作
+				
+			5.parentNode.replaceChild(new,old)
+				将old节点替换为new节点，执行的是剪切的操作。会删除原有的old节点
+				
+			6.node.cloneNode(boolean);
+				↑
+				这个是要被克隆的节点
+				wrap.appendChild(box.cloneNode());
+				如果不传里面的布尔值或者是（false），那么默认是只克隆这个节点，而不会复制里面的内容
+				如果传入的是true，那么会克隆里面的内容，包括子节点
+				
+			
+				
+			
+			
+		</p>
+		<div class="wrap"></div>
+		<div class="box"></div>
+		<script type="text/javascript">
+			var wrap=document.querySelector('.wrap');
+			var box=document.querySelector('.box');
+			var div0=document.createElement('input')
+			div0.setAttribute('type','button');
+			div0.setAttribute('value','按钮')
+			wrap.appendChild(div0);
+			var arr=[];
+//			wrap.appendChild(box);//结构发生改变，将box元素剪切到wrap内
+			wrap.insertBefore(box,div0);
+			wrap.onclick=function(){
+				arr.push(this.removeChild(box)) ;
+				console.log(arr)
+			}
+		</script>
+	</body>
+</html>

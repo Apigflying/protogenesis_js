@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function show(){
+				alert(this)
+			}
+			show();------window
+			new show();--Object
+			
+			验证前面的当函数调用的前面有new的时候
+				相当于在函数内部的最前面var this=new Object();
+				又在函数的最后面return了这个this
+				
+				在函数直接调用的时候(不加new),函数是window的方法
+				在函数调用的前面加个new,就相当于在函数内声明了一个new Object()=this;此时,这里的this就是这个Object
+		</script>
+	</body>
+</html>

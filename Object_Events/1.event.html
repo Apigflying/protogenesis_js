@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		event是事件对象
+		当事件触发的时候，跟这个事件有关的详细信息都会被临时保存到一个地方，就是event对象内，在需要的时候调用
+		
+		
+		event对象一般是在函数被  ‘事件’ 调用的时候，放在事件调用的函数内，只对事件调用起作用
+		function fn(){
+			alert(event);
+		}
+		fn();//直接调用
+		此时的函数不是通过事件调用执行，所以这个event是undefined
+		document.onclick=fn;//事件调用
+		1.在ie/chrome下，event是全局对象
+		（此时event为[object MouseEvent]即：鼠标事件）
+		
+		2.如果是ff浏览器，event对象不是全局对象，调用时直接使用会报错：ReferenceError: event is not defined
+		
+		处理兼容性问题：
+		
+		1.在ie和chrome内，event是一个全局的对象，对象默认被声明了，声明的变量没有初始化，相当于在全局内，有：
+		var event;
+		2.在标准下（ff）：事件对象是通过事件函数的第一参数传入的
+		（如果没有参数，那么此时的event是未定义，会报错）
+		
+		解决兼容性问题
+		function fn(ev){
+			var ev = ev || event   //重新给ev赋值
+		}
+		document.onclick=fn;
+		
+		此时的函数event是点击事件时候调用的函数，所以此时的event才是object
+		
+		
+		鼠标事件：
+		1.onclick 	点击事件
+		2.onmouseover 	鼠标移入事件
+		3.onmouseout 	鼠标移出事件
+		4.momousemove 	鼠标移动事件
+		//当鼠标在一个元素上面移动的时候触发该事件
+		//触发频率不是像素，而是间隔时间，在一个指定的时间内（非常短的时间）如果鼠标的位置和上一次的位置发生了变化，那么就会触发一次，在
+		
+		
+		
+		<script>
+			function fn(ev){
+				var ev=ev||event;
+				for(var attr in ev){
+					console.log(attr+'='+ev[attr]);
+				}
+			}
+			document.onclick=fn;//此时event为[object MouseEvent]即：鼠标事件
+		</script>
+	</body>
+</html>

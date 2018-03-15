@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				position:relative
+			}
+			p{
+				margin:0;
+				padding:0;
+				position: absolute;
+				pointer-events: none;
+			}
+			#box{
+				width:100px;
+				height:100px;
+				background: red;
+				position:absolute;
+				cursor:move;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			拖拽的原理：
+			利用鼠标事件中的三个：onmousedown，onmousemove，onmouseup
+								↑			↑			↑
+							    鼠标按键按住	     鼠标移动		   鼠标按键松开
+							      选择元素	                 移动元素		      释放元素
+							      
+		</p>
+		dsgfds
+		<div id="box"></div>
+		<div style="width:100px;height:100px;background:green;position:absolute;left:100px;top:300px;"></div>
+		<script type="text/javascript">
+			var box=document.getElementById('box');
+			box.onmousedown=function(ev){
+				var ev=ev||event;
+				var dpl=ev.clientX-this.offsetLeft;
+				var dpt=ev.clientY-this.offsetTop;
+				document.onmousemove=function(ev){
+					var ev=ev||event;
+					box.style.left=ev.clientX-dpl+'px';
+					box.style.top=ev.clientY-dpt+'px';
+				}
+				document.onmouseup=function(){
+					document.onmousemove=null;
+				}
+			}
+		</script>
+	</body>
+</html>

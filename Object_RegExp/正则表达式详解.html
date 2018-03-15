@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			fdsla 4953jui09jtg59hh6j 4h7kj5h6hiou 5h67u 3h47 h6iul87j56bhv  uh53  54ho  o56h74o 547oj  56o74 547  johtgr u jh y h rt srte htr ht tghjtrwj gsfd
+		</p>
+		<span>
+			\b   区分单词的开头或者结尾，也就是单词的分界处。它匹配的是一个位置
+			例如：\bhi\b,在文档中精确查找hi这个字符串，如果是history就无法被查找到
+			要查找hi后面的Lucy
+			\bhi\b.*\bLuck\b
+			
+			.    是匹配除了换行符（回车）以外的任意字符
+			*	 也是元字符，它不代表字符，也不代表位置，它代表数量---它指定*前面的内容可以连续重复使用任意次以使整个表达式得到匹配
+			
+			.*连在一起就表示：任意数量的不包含换行的字符
+			
+			解释上面的查找：
+			显示一个单词hi，被查找到，然后是任意个任意字符（不能使换行），最后是Lucy这个单词，
+		</span>
+		<script>
+			var op=document.querySelector('p').innerHTML;
+			
+			var s=new RegExp.test()
+			
+		</script>
+	</body>
+</html>

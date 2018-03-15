@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			1.构造函数
+				一个函数，它的作用的用来创建对象，那么这个函数就是构造函数，这个函数的参数（传参）就是给这个对象添加自定义属性值即obj的value
+			
+			2.工厂方式
+				1）没有new，有些功能用不了
+				2）在创建对象的时候，会将函数内对象内obj的方法逐个添加到每个创建的对象身上，相当于每个创建的对象，身上都有这个方法。。浪费资源
+			
+			
+			注：函数表达式
+				当用函数表达式的时候，其实是
+					var fn=new Function("alert(this)");
+				 其简写：var fn=function(){alert(this)};
+				
+			
+		</p>
+	<script type="text/javascript">
+		//下面的例子就是用工厂方式创建对象
+		
+//		function createPerson(name,sex){
+//			var obj={};
+//			obj.name=name;
+//			obj.sex=sex;
+//			obj.showName=function(){
+//				alert(this.name)
+//			}
+//			obj.showSex=function(){
+//				alert(this.sex)
+//			}
+//			return	obj;
+//		}
+//		总结：	要么在调用的时候用new（但是需要改变函数内的this）
+// 				要么在函数内用new，在函数内添加新对象
+				//new Object();
+		function createPerson(name,sex){
+			//var this=new Object();//假想的工作流程
+			this.name=name;
+			this.sex=sex;
+			this.showName=function(){
+				alert(this.name)
+			}
+			this.showSex=function(){
+				alert(this.sex)
+			}
+//			return this;//这个也是假想的
+		}
+		
+		var p1=new createPerson('blue','girl');
+		var p2=new createPerson('green','boy');
+		p1.showName();
+		p1.showSex();
+		p2.showName();
+		p2.showSex();
+	</script>
+	</body>
+</html>

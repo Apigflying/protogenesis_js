@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			#div1{
+				width:100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				border: none;
+				outline: none;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			键盘事件： onkeydown 当键盘按下时触发的事件
+				   onkeyup 	 当键盘抬起的时候触发的事件
+			
+			
+			在函数内event事件有一个   event.keyCode   传入的是数字类型的值   也就是键盘按键的值，键值
+		
+		ev.ctrlKey返回的是布尔值true或者false，验证当前事件发生时，是否同时摁下了ctrl||shift||alt按键
+		
+		ctrlKey,shiftKey,altKey 对应的布尔值
+		
+		当一个事件发生的时候，如果ctrl||shift||alt是按下的状态，就返回true;否则就返回false
+		
+		包括鼠标事件触发时，也有对应的布尔值
+		document.onclick=function(ev){
+			var ev=ev||event;
+			console.log(ev.ctrlKey);  →   验证文档被点击时，是否摁了键盘上的ctrl键，如果按了，返回true，如果没按，返回false
+		}
+		
+		
+		
+		注：不是所有元素都能够接受键盘事件，只有能够响应用户输入的元素，也就是能够接收焦点的元素，就能接收键盘事件
+		例如：
+		下面的div和input
+		当元素是div元素时，由于div元素无法获取焦点，所以无法给这个div添加键盘事件
+		当将元素换成是input元素时，用button模拟这个div，此时，先让这个button获取焦点，用div1.focus()的方式，自动获取焦点
+		然后给这个自动获取完焦点的元素添加键盘事件，就可以了
+		
+		
+		onkeydown：如果按下不抬起，那么就会连续触发
+		
+		解决键盘按键触发时，停顿的问题
+		用定时器
+		
+		原理：
+		每次键盘按键按下的时候，定时器重新加载改变一个方向的值
+		当按住不动时，利用定时器去每次执行这个位置的改变
+		</p>
+		<!--<div id="div1"></div>-->
+		<input type="button" id="div1" />
+		<script type="text/javascript">
+			var div1=document.getElementById('div1');
+			div1.focus();
+			var _left=false;
+			var _top=false;
+			var _right=false;
+			var _bottom=false;
+			var timer=null;
+			function autoPlay(){
+				console.log(1);
+				//在键盘按着的时候，这个函数只执行了一次，
+				//相当于每次都是利用下面的定时器，让这个div移动
+				//键盘控制的只有上面的_left四个方向真假
+				clearInterval(timer);
+				timer=setInterval(function(){
+					//该函数被执行的时候，此时_left值一直是true，定时器一直执行
+					//在键盘的方向键按下的时候，在它的事件函数内，一直执行一个开关，让这个开关的值为true并执行
+					if(_left){
+						div1.style.left=div1.offsetLeft-10+'px';
+					}else if(_right){
+						div1.style.left=div1.offsetLeft+10+'px';
+					}else if(_top){
+						div1.style.top=div1.offsetTop-10+'px';
+					}else if(_bottom){
+						div1.style.top=div1.offsetTop+10+'px';
+					}
+				},1000/60)
+			}
+			document.onkeydown=function(ev){
+				var ev=ev||event;
+				switch(ev.keyCode){
+					case 37:
+					//当向左箭头摁住的时候，_left值一直是true;
+					//autoPlay函数被执行
+					_left=true;
+					autoPlay();
+					break;
+					
+					case 38:
+					_top=true;
+					autoPlay();
+					break;
+					
+					case 39:
+					_right=true;
+					autoPlay();
+					break;
+					
+					case 40:
+					_bottom=true;
+					autoPlay();
+					break;
+				}
+			}
+			document.onkeyup=function(){
+				var ev=ev||event;
+				switch(ev.keyCode){
+					case 37:
+					//当键盘的方向键由按下被抬起的时候，此时，对应方向的布尔值变为false，那么就不会继续走了
+					_left=false;
+					break;
+					case 38:
+					_top=false;
+					break;
+					case 39:
+					_right=false;
+					break;
+					case 40:
+					_bottom=false;
+					break;
+				}
+			}
+//			
+//			
+//			
+//		div1.onkeydown=function(ev){
+//			var ev=ev||event;
+//			switch (ev.keyCode){
+//					case 37:
+//				div1.style.left=div1.offsetLeft-10+'px';
+//					break;
+//					case 38:
+//				div1.style.top=div1.offsetTop-10+'px';
+//					break;
+//					case 39:
+//				div1.style.left=div1.offsetLeft+10+'px';
+//					break;
+//					case 40:
+//				div1.style.top=div1.offsetTop+10+'px';
+//					break;
+//			}
+//		}
+		</script>
+	</body>
+</html>

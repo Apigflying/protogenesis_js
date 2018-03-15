@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		既然说event在事件调用的函数内是一个对象，那么可以通过for...in...遍历这个event对象
+		for(var attr in ev){
+			console.log(attr+'='+ev[attr])
+		}
+		在控制台输出event对象的key和value
+		event有很多的方法
+		（
+		
+			这些方法类似于全局的函数，如：text.onfocus();
+			函数也是event的key，可以通过ev.key()的方式调用这些函数
+			这些函数可以获取当事件被  触发  时，保留下来的信息
+
+		） 
+		这些函数只在event内生效，无法再全局内使用；
+		
+		
+		1.clientX(Y) : 当一个事件发生的时候，鼠标到页面可视区域的距离
+		
+		
+		<script type="text/javascript">
+			function fn(ev){
+				var ev=ev||event;
+				for(var attr in ev){
+					console.log(attr+'='+ev[attr])
+				}
+			}
+			document.onclick=fn;
+		</script>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			prototype原型
+			
+			给类添加方法，如：给Array添加，
+				Array.prototype.abc=function(){}
+				用原型的方式添加的方法，所有用new Array()声明的数组，都能使用abc这个方法了
+				
+				var arr=new Array();
+				在这里，Array是一个类，用new方法创建的，它没有实际功能，只能用来构造函数，类似于模子
+				而声明的变量arr就是由这个构造函数的模子，生产出来的成品，它有功能，是被类给创造出来的
+				
+			
+		</p>
+		<script type="text/javascript">
+			var arr=new Array(1,2,3,4,5,6,7,8);
+			var arr1=new Array(4,4,6,2,1,4,5,2);
+			Array.prototype.num=function(){
+				var result=0;
+				for(var i=0;i<this.length;i++){
+					result+=this[i];
+				}
+				return result;
+			}
+			console.log(arr.num());
+			console.log(arr1.num())
+			
+		</script>
+	</body>
+</html>

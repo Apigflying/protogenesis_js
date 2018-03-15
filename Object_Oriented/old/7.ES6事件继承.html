@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试专用</title>
+  <style>
+  	#box{
+  		width:100px;
+  		height:100px;
+  		background: red;
+  		position:absolute;
+  		line-height:100px;
+  		text-align:center;
+  		font-size:40px;
+  		color:yellow;
+  	}
+  	#dialog{
+  		background: #fff;
+  		position: absolute;
+  		width:300px;
+  		height:180px;
+  		border:1px solid #000000;
+  		border-radius: 5px;
+  		left:100px;
+  		top:300px;
+  	}
+  	#dialog h3{
+  		padding: 0;
+  		margin:0;
+  		height:30px;
+  		padding: 5px 10px;
+  		font-size:16px;
+  		font-weight: normal;
+  	}
+  	#dialog h3 i{
+  		float: right;
+  		font-size: 20px;
+  		font-style: normal;
+  	}
+  	#dialog p{
+  		margin:30px;
+  		padding:5px 10px;
+  		font-size:20px;
+  	}
+  	.btns{
+  		float: right;
+  		margin-right:15px;
+  	}
+  	.close{
+  		cursor: pointer;
+  	}
+  </style>
+</head>
+<body style="height:3000px">
+		<input type="button" name="loads" id="loads" value="登录" />
+		<div id="box">111</div>
+	  <script type="text/javascript">
+	  	class EventListener{
+	  		constructor (){
+	  			this.book={};
+	  		}
+	  		subscribe(nowstatus,handle){
+	  			if(!this.book[nowstatus]){
+	  				this.book[nowstatus]=[];
+	  			}
+	  			this.book[nowstatus].push(handle);
+	  		}
+	  		publish(nowstatus){
+	  			var books=this.book[nowstatus];
+	  			if(books){//如果通过subscribe方法给这个book添加东西，那么不会走这里
+	  				for (var i = 0; i < books.length; i++) {
+	  					books[i]();
+	  				}
+	  			}
+	  		}
+	  	}
+	  	class Drag extends EventListener{
+	  		constructor(){
+	  			super();
+	  		}
+	  		drag(ele){
+	  			this.ele=ele;
+	  			this.disX=this.disY=0;
+	  			this.ele.addEventListener('mousedown',this.fnDown.bind(this));
+	  		}
+	  		fnDown(e){
+	  			e.preventDefault();
+	  			this.disX=e.clientX-this.ele.offsetLeft;
+	  			this.disY=e.clientY-this.ele.offsetTop;
+	  			this.move=this.fnMove.bind(this);
+	  			this.up=this.fnUp.bind(this);
+	  			document.addEventListener('mousemove',this.move);
+	  			document.addEventListener('mouseup',this.up);
+	  		}
+	  		fnMove(e){
+	  			e.preventDefault();
+	  			this.ele.style.left=e.clientX-this.disX+'px';
+	  			this.ele.style.top=e.clientY-this.disY+'px';
+	  		}
+	  		fnUp(){
+	  			this.publish('changecont');
+	  			document.removeEventListener('mousemove',this.move);
+	  		}
+	  	}
+	  	class Dialog extends Drag{
+	  		constructor(option){
+	  			super();
+	  			this.obj={
+	  				title:'弹窗提醒',
+	  				cont:'弹窗提示内容',
+	  				sureValue:'确定',
+	  				cancelValue:'取消'
+	  			}
+	  			this.currentObj=Object.assign(this.obj,option);
+	  			this.init();
+	  		}
+	  		init(){
+	  			this.dialog=this._pushHtml();
+	  			document.body.appendChild(this.dialog);
+	  			this.drag(this.dialog)
+	  			this.close=this.dialog.querySelector('.close');
+	  			
+	  			this._events();
+	  			
+	  			this._addEvent();
+	  		}
+	  		_html(){
+	  			return `<h3>
+										${this.currentObj.title}
+										<i class="close">×</i>
+									</h3>
+									<p>${this.currentObj.cont}</p>
+									<div class="btns">
+										<input type="button" value="${this.currentObj.sureValue}" />
+										<input type="button" value="${this.currentObj.cancelValue}" />
+									</div>`;
+	  		}
+	  		_pushHtml(){
+	  			this.dialog=document.createElement("div");
+	  			this.dialog.id='dialog';
+	  			this.dialog.innerHTML=this._html();
+	  			return this.dialog;
+	  		}
+	  		_addEvent(){
+	  			this.resize=this._events.bind(this);
+	  			window.addEventListener('resize',this.resize)
+	  			window.addEventListener('scroll',this.resize)
+	  			
+	  			this.close.addEventListener('click',function(){
+	  					this.publish('close');
+	  				  document.body.removeChild(this.dialog)
+	  			}.bind(this));
+	  		}
+	  		_events(){
+	  			var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+	  			this.dialog.style.left=(window.innerWidth-this.dialog.offsetWidth)/2+'px';
+	  			this.dialog.style.top=(window.innerHeight-this.dialog.offsetHeight)/2+scrollTop+'px'
+	  		}
+	  		_reomveEvent(){
+	  			window.addEventListener('resize',this.resize)
+	  			window.addEventListener('scroll',this.resize)
+	  		}
+	  	}
+	  	var box=document.getElementById("box");
+	  	var loads=document.getElementById("loads");
+	  	var s=new Drag;
+	  	s.drag(box);
+	  	s.subscribe('changecont',function(){
+	  		s.ele.innerHTML='222';
+	  		s.ele.style.color='green';
+	  		s.ele.style.background='yellow';
+	  	})
+	  	loads.onclick=function (){
+	  		var els=new Dialog({
+	  			//可以自定义弹框内容
+	  		})
+		  	els.subscribe('close',function(){
+		  		s.ele.style.background='blue';
+		  		s.ele.style.color='red';
+		  	})
+	  	}
+ 		</script>
+</body>
+</html>

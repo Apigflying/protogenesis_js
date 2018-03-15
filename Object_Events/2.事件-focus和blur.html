@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" name="text1" id="text1" value="请输入内容" />
+		
+		<script type="text/javascript">
+			var text1=document.getElementById('text1');
+//			text1.focus();如果将text1放在这里，会造成光标在'请输入内容'这几个字的前面
+			//text1.select();//自动全选元素内的文本内容，要先选择全部内容，再获取焦点
+			text1.onfocus=function(){
+				if(this.value==='请输入内容'){
+					this.value=''
+				}
+			}
+			text1.onblur=function(){
+				if(this.value===''){
+					this.value='请输入内容'
+				}
+			}
+			//text1.focus();//所以，focus()方法要放到后面
+			//focus()是浏览器自带的方法，让元素自动获取焦点
+			//blur()可以取消元素身上获取的焦点
+			//select()可以   自动选择   元素   内的     '文本内容'
+			//text1.select();
+			
+		</script>
+	</body>
+</html>

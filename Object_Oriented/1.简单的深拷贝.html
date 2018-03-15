@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var obj1={
+				a:{
+					b:1
+				}
+			};
+			/*
+			Object.assign是浅拷贝
+			var obj2=Object.assign({},obj1)
+			obj2.a.b=2;
+			console.log(obj1.a.b) //2
+			*/
+			
+			/*
+			 * 最简单的对象深拷贝
+			 * var obj3=JSON.parse(JSON.stringify(obj1))
+			obj3.a.b=2;
+			console.log(obj3)
+			console.log(obj1.a.b)*/
+			
+			
+		</script>
+	</body>
+</html>

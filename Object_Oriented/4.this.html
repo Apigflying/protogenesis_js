@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#div1{
+				width:100px;
+				height:100px;
+				background: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			/*window.id = 'window'
+			document.getElementById('div1').onclick=function(){
+				console.log(this.id) //div1
+				var getId = function(){
+					console.log(this.id) //window
+				}
+				
+				var getId  = e =>{
+					console.log(this.id)//执行时，引用声明时所在外层作用域的this
+				}
+				
+				getId.call(this)
+			}*/
+			/*
+			var func = function(a){
+				console.log(a)
+				console.log(arguments)
+			}
+			func.apply(null,[1,2,3])
+			*/
+			
+			/*
+			document.getElementById = (function(fn){
+				return function(){
+					return fn.apply(document,arguments);
+				}
+			})(document.getElementById);
+			var getId = document.getElementById;
+			var div = getId('div1');
+			console.log(div.id)
+			*/
+			/*
+			Function.prototype.bind = function(context){
+				var self = this;
+				return function(){
+					return self.apply(context,arguments);
+				}
+			}
+			var obj = {
+				name:'sven'
+			}
+			var func = function(){
+				console.log(this.name)
+			}.bind(obj)
+			func()
+			*/
+			/*
+			Function.prototype.bind = function(){
+				var self = this,
+					context = [].shift.call(arguments),
+					args = [].slice.call(arguments);
+				return function(){
+					console.log(context)
+					return self.apply(
+						context,[].concat.call(args,[].slice.call(arguments
+					)));
+				}
+			}
+			var obj={
+				name:'sven'
+			}
+			var fn = function(a,b){
+				console.log(this.name)
+				console.log([a,b])
+			}.bind(obj)
+			fn(1,2)
+			*/
+			/*
+			var a={}
+			Array.prototype.push.apply(a,[1,2,3])
+			console.log(a.length)
+			console.log(a)
+			*/
+			class A{
+				constructor(params){
+					this.test = 123;
+//					this.upload = this.upload.bind(this);
+				}
+				upload(){
+					return this.test;
+				}
+			}
+			class B extends A{
+				constructor(){
+					super();
+					this.test=234;
+				}
+			}
+			var a = new A();
+			var b = new B();
+			console.log(b.upload.call(a))
+			
+			
+			/*
+			const div1 = document.getElementById('div1')
+			div1.test = 2345
+			div1.onclick = a.upload
+			*/
+		</script>
+	</body>
+</html>

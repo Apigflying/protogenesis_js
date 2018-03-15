@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var num = 0;
+    // window.onresize=function(){
+    //   console.log(document.documentElement.clientHeight);
+    //   //在拖动内窗口的时候，此函数会被频繁触发，使用定时器，创建一个节流函数
+    // }
+
+    //事件函数在触发的时候，可以利用闭包，及高阶函数完成函数内的引用
+
+    var throttle = function (fn, interval) {
+      var __self = fn, // 保存需要被延迟执行的函数引用
+        timer,        // 定时器
+        firstTime = true; // 是否是第一次调用
+
+      //在高频触发事件的时候，会执行下面的函数，而不会再次执行上面的函数，所以firstTime不会重新复制为true
+      return function () {
+        var args = arguments,
+          __me = this;
+        if (firstTime) { 
+          // 如果是第一次调用，不需延迟执行，直接执行
+          //这里只会执行一次,以后每次执行这个函数，firstTime都是false
+          __self.apply(__me, args);
+          return firstTime = false;
+        }
+        if (timer) { 
+          //第三次进入这个函数，timer有值了，就不往后走执行
+          // 如果定时器还在，说明前一次延迟执行还没有完成
+          return false;
+        }
+        //第二次进入这个函数，timer是undefined，延时执行里面的函数
+        timer = setTimeout(function () { 
+          clearTimeout(timer);
+          //执行之后，直接将timer设置为false下次不return掉函数执行
+          timer = null;
+          __self.apply(__me, args);
+        }, interval || 500);
+      };
+    };
+    window.onresize = throttle(function () {
+      console.log(1);
+    }, 200);
+  </script>
+</body>
+
+</html>

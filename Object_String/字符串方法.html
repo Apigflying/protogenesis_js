@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			大小写转化
+				str.toUpperCase();将字符串中***小写***的英文单词全部文字转换为***大写***
+	
+				str.toLowerCase();将字符中所有***大写***的英文单词全部转换为***小写***
+				
+			用``包裹字符串
+			在字符串拼接的时候，用${}来包裹
+			str+=`<li class="${cls}">${i}</li>`;
+			
+			str+='<li class="'+cls+'">'+i+'</li>';
+			
+			这两种字符串拼接的方式，获得的结果相同	
+				
+		</p>
+		<script type="text/javascript">
+			var ul=document.getElementById('ul');
+			var str='';
+			var cls='';
+			for(var i=0;i<5;i++){
+				if(i==3){
+					cls='fl';
+				}else{
+					cls='';
+				}
+				str+='<li>'+(i<4?5:2)+'</li>';
+//				str+=`<li class="${cls}">${i}</li>`;
+			}
+			ul.innerHTML=str;
+		</script>
+	</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<!-- <link rel="stylesheet" href=""> -->
+	<style>
+		.prog_vol{
+			display: flex;
+			width:200px;
+			justify-content: space-between;
+		}
+		.play_line{
+			width:120px;
+			height:10px;
+			background: red;
+			border-radius: 5px;
+			position:relative;
+			margin-top:90px;
+			float:left;
+		}
+		.progress_line{
+			position: absolute;
+			left:0;top:0;
+			height:10px;
+			width:0px;
+			border-radius: 5px;
+			background: blue;
+		}
+		.point{
+			position: absolute;
+			left:0px;
+			width:10px;
+			height:10px;
+			border:5px solid rgba(0,0,0,0.2);
+			border-radius: 50%;
+			top:calc(50% - 10px);
+		}
+		.vol_line{
+			margin-left:20px;
+			width:20px;
+			height:120px;
+			border:1px solid #999;
+			position: relative;
+		}
+		.vol_line:after{
+			content: '';
+			width:2px;
+			height:100px;
+			position: absolute;
+			left:calc(50% - 1px);
+			top:calc(50% - 50px);
+			background: blue;
+		}
+		.vol_progress{
+			width:2px;
+			height:10px;
+			z-index: 1;
+			position: absolute;
+			left:calc(50% - 1px);
+			bottom:calc(50% - 50px);
+			background: red;
+		}
+	</style>
+</head>
+<body>
+<p>
+	音频和视频容器：
+	网站中加载视频很快
+		因为浏览器中有一个：编解码器
+		音频或者视频通过编解码器，将文件变小，压缩，然后在点击播放的时候再解码
+	为了兼容编解码器，用source来将统一个视频的多个格式，进行兼容
+	1.controls
+	视频和音频都有控制的属性：controls
+	默认是不显示的，让播放控件显示出来
+	控件在不同浏览器上显示的样式不同
+	2.autoplay
+	控制音频或者视频是否自动播放
+	3.loop
+	媒体是否循环播放
+	4.currentTime
+	用JS获取当前播放的时间
+	这个属性不但可以获取，还可以设置
+	5.duration
+	媒体元素总时间（只读）
+	6.volume
+	音量：0~1之间
+	7.muted
+	是否静音：如果静音就为true。如果不静音就是false
+	8.paused
+	媒体是否暂停（只读）true/false
+	9.ended
+	媒体是否播放完毕（只读）true/false
+	10.error
+	媒体发生错误的时候，返回错误代码（只读）
+	11.currentSrc
+	以字符串的形式返回媒体地址（只读）
+	12.play()
+	媒体播放
+	13.pause()
+	媒体暂停
+	14.load()
+	重新加载媒体
+	当某个事件触发，改变了媒体的地址，或者媒体元素的src的时候，要重新load()一下，才能播放新的媒体
+	15.poster
+	视频播放时候的预览图片
+	16.width,height
+	audios.videoWidth;
+	audios.videoHeight;
+</p>
+	<audio id="audios" src="./files/Craig David-Walking Away.mp3" controls></audio>
+	<div class="prog_vol">
+		<!-- 控制播放的进度条 -->
+		<div class="play_line">
+			<div class="progress_line">
+				<div class="point" ab='123'></div>
+			</div>
+		</div>
+		<!-- 控制音量大小的进度条 -->
+		<div class="vol_line">
+			<div class="vol_progress">
+				<div class="ctrl_vol"></div>
+			</div>
+		</div>
+	</div>
+	<input type="button" value="播放" id="play">
+	<script>
+		var audios=document.getElementById('audios');//音乐标签	
+		var playLine=document.querySelector('.play_line');//进度条的父级
+		var prog=document.querySelector('.progress_line');//已播放的进度条
+		var point=document.querySelector('.point');//控制播放进度的圆点
+		var play=document.getElementById('play');//播放暂停按钮
+		var timer=null;//定时器
+		var progressMes={
+			maxw:prog.parentNode.offsetWidth,//最大宽度
+			pl:prog.getBoundingClientRect().left,//进度条的left值
+			pw:prog.getBoundingClientRect().width,//进度条的宽度
+			w:point.offsetWidth,//圆点的宽度，这个宽度是算上边框的宽度的
+			l:point.offsetLeft,//圆点相对于父级的left值
+			canmovedis:prog.parentNode.offsetWidth-point.offsetWidth,//能够移动的最大距离
+			isCtrlProgress:false
+		};
+
+		play.onclick=function(){
+			if(audios.paused){
+				startPlay();//开始播放
+			}else{
+				endOrPause();//暂停或者停止
+			}
+		}
+
+		playLine.onclick=function(e){
+			var changeProg=e.clientX-progressMes.pl-progressMes.w/2;
+			setProgress(changeProg);
+			ctrlTime(changeProg)
+		}
+
+		point.onmousedown=function(e){
+			endOrPause();
+			progressMes.isCtrlProgress=true;
+			var e=e||window.event;
+			var cposition=e.clientX-progressMes.l-progressMes.pl;//点击的位置，在圆的左边距的位置
+			document.onmousemove=function(e){
+				var e=e||window.event;
+				progressMes.l=e.clientX-cposition-progressMes.pl;
+				if(progressMes.l<=0){progressMes.l=0};
+				if(progressMes.l>=progressMes.maxw-(progressMes.w)){
+					progressMes.l=progressMes.maxw-(progressMes.w)
+				}
+				//设置音频播放的时间，进度条按钮的left值/进度条总进度*音频的总时间
+				audios.currentTime=progressMes.l/progressMes.canmovedis*audios.duration;
+				ctrlTime(progressMes.l)
+				//设置进度条的显示宽度和圆点的left值
+				setProgress(progressMes.l);
+			}.bind(this);
+			document.onmouseup=function(){
+				if(progressMes.isCtrlProgress){
+					startPlay();
+					progressMes.isCtrlProgress=false;
+				}
+				document.onmousemove=null;
+			}
+			return false;
+		}
+		//这个函数专门用来设置进度条的位置和进度条的显示
+		function setProgress(pointLeft){
+			point.style.left=pointLeft+'px';
+			prog.style.width=pointLeft+progressMes.w/2+'px';
+		}
+		function ctrlTime(progPosition){
+			return audios.currentTime=progPosition/progressMes.canmovedis*audios.duration;
+		}
+		//当点击暂停按钮或者音乐结束的时候，执行这个函数
+		function endOrPause(){
+			audios.pause();
+			play.value='播放';
+			//暂停的时候，清空定时器
+			clearInterval(timer);
+		}
+		function startPlay(){
+			//如果暂停了，就让其播放
+			audios.play();
+			play.value='暂停';//更改里面的内容
+			//进度条能够移动的总路程/音频的总时长
+			var progressratio=progressMes.canmovedis/audios.duration;
+			timer=setInterval(() => {
+				//在播放的时候，控制进度条的显示
+				setProgress(audios.currentTime*progressratio);
+				if(audios.ended){
+					endOrPause()
+				}
+			},500);
+		}
+	</script>
+</body>
+</html>

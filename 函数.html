@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			(一)
+			function fn(标识符)(arg1,arg2...(形参)){
+				语句1...
+				语句2...
+				arguments:类数组,是实参的集合
+				return 写了return,那么在函数外面调用这个函数,即fn()就是这个return的东西;return后面的代码不会执行
+			}
+			函数表达式和直接声明函数的区别:
+			函数直接声明可以在任何地方被调用,而函数表达示只能在声明这个函数过后使用,匿名函数自执行也是一种函数表达式
+			
+			
+			(二)
+			函数调用的形式
+				1.fn() → 直接调用
+				2.document.onclick=fn; → 事件调用
+				3.setInterval(fn,200); → 定时器调用
+				4.
+				   1)
+				   		(function(){})();
+				   2)
+				   		!function(){}();
+				   3)
+				   		~function(){}();
+				注:匿名函数自执行属于一种特殊的函数表达式,当匿名函数自执行用递归的时候,可以通过给这个匿名函数加一个名字,然后调用
+						栗子:
+						在这里访问不到fn
+						(function fn(i){
+							if(i<5){fn(i)}
+						})(0)
+						在这里也访问不到fn
+			
+			(三)
+			this:可以理解为定义好的一个变量,this里面储存的永远是个对象;类似于var a=obj,但是这个obj不是固定的,随着环境的改变而不同
+			栗子1:
+			var arr=[];
+			声明了一个变量arr和一个数组,这个变量arr保存的是一个指向这个数组的指针
+			var arr2=arr;
+			arr2.push(1)
+			arr → [1]
+			这个数组是在内存中的,arr保存的只是指向这个数组的指针,当arr2改变这个数组的时候,再去调用arr,此时arr指向的这个数组发生了改变,所以arr的值会被改变
+			
+			下面看this
+				li[0].onclick=function(){
+					this.style.width='100px';
+				}
+			这个this就是指向这个li,类似于arr指向[]
+			不同的是,this指向的对象一定是已经存在的,而arr指向的是一个新定义的;
+				div[0].onclick=function(){
+					li[0].style.width='200px';
+				}
+			当其他事件改变这个li的时候,this保存的li的值也会改变
+			
+			注:除了事件调用,和对象调用(不包括定时器内调用的obj.fn)其他所有的情况,this的指向都是window
+			栗子2:
+			var obj={
+				fn:function(){console.log(this)}
+			}
+			setTimeout(obj.fn,100)
+			这里的this是window
+						
+			
+			(四)
+			作用域和作用域链:
+			全局作用域    和    局部作用域
+			   ↑  	      ↑
+	全局的,任何函数都能访问  	函数内的,函数内部才能访问到
+	
+	函数可以通过作用域链向外寻找(查找,修改)标识符,直到找到最外层的全局作用域,而全局及全局内的其他函数,不能访问这个函数作用域内的标识符
+		
+		
+	fn1(){a*4}		fn2(){var a=3;}
+		↑				↑				
+	其他函数内     想利用       这个函数内的变量    有两种方法:
+	
+	第一种:
+	1.闭包(返回一个函数)
+	在外面调用这个函数,将这个变量保存下来;脑残吧?!!!
+	fn2(){
+		var a=3;
+		return function fn3(){return a};
+	}
+	var x=fn2();这个x就是一个函数表达式,保存了这个函数,但是x这个函数在别的函数内还特么无法使用
+	var y=x();在这里就将这个a的值拿到了,太特么无聊了!!!
+	
+	为什么要用y保存?
+	如果不保存:
+	function fn2(){
+		var a=3;
+		return function fn3(){return a;};
+	}
+	var x=fn2();
+	function fn3(){
+		x()++;
+		console.log(a);我特么找不到a,报错了
+		
+	}
+	fn3();
+	所以闭包看似深奥.起始没啥鸟用
+	
+	
+	
+	***在一种情况下比较好用
+	for(var i=0;i<li.length;i++){
+		(function(a){
+			li[a].onclick=function(){
+				console.log(a);
+				我在这里能被获取到外面for循环的i,a是形参,i是实参传进来了,我的作用域可以访问外面作用域的变量a也就是实参i,就不用给li们添加自定义属性了
+			}
+		})(i)
+	}***
+	
+	第二种
+	2.函数有返回值的情况下,fn()就是这个函数的返回值,就能利用fn里面的a了
+	这是闭包的恶心写法
+	···
+	function fn2(){
+		var a=3;
+		return function fn3(){return a;};
+	}
+	var x=fn2();
+	function fn3(){
+		x()++;
+		console.log(a);我特么找不到a,报错了
+		
+	}
+	fn3();
+	···
+	利用返回值:
+	function fn2(){
+		var a=3;
+		return a;
+	}
+	function fn3(){
+		console.log(fn2());
+	}
+	fn3();  →   3
+	
+	
+	
+			(五)
+			window.onload=function(){};
+			写在里面的函数,在控制台中找不到怎么办?
+			1.BOM都是window的方法
+			2.可以再上面的函数最后面,给window添加一个自定义属性,然后让上面函数内的函数=window.abc,就可以拿到了
+			window.onload=function(){
+				function a(){}
+				window.abc=a;
+			};
+			这样就能在控制台中使用a函数了
+			
+			(六)
+			箭头函数
+			
+			
+			
+			
+		</script>
+		
+	</body>
+</html>

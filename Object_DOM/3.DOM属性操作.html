@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			1.DOM中有定位的元素
+				ele.offsetParent 	→ 	获取到元素的定位父级（如果没有定位父级，那么就是body）
+				
+				ele.offsetLeft/Top	→ 	获取当前元素的左/上外边距
+					1)当元素有绝对定位的时候\n
+						就是到定位父级的left/top值
+					2)当元素没有绝对定位，但有定位父级的时候
+						就是到定位父级的内边框的距离
+					3)当元素没有绝对定位，也没有定位父级的时候
+						就是到document的距离（如果body的margin没有被清掉，就要加上body的margin值）
+				
+				
+			
+				
+		</p>
+		<script type="text/javascript">
+			
+		</script>
+	</body>
+</html>

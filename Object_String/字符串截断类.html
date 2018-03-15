@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			var str='abcdefghijklm';
+			
+			console.log(str)
+			(一) str.substr(n);
+				传入的参数类型是'number'
+				1).只传一个参数的时候,从该参数开始向后截取(包括当前的数字对应的字符)全部
+					1,传的参数的数值:0<n<str.length-1;
+						此时的str被正常截取
+					2,传入的参数:str.length=<n;
+						被截取的是空字符串,因为str.length后面没有了
+					3,传入的参数：-str.length=<n<0时
+						var str='abcdefghijklm';
+										 ↑	 ↑
+										-5	-1
+						从第str.length+n位开始向后截取全部
+						如果n=-5,length=13
+						那么就从第8位开始显示
+					4,传入的非数字,会被转换成0	
+						
+				2).传两个参数的时候
+					第一个参数,表示从第几位开始提取,第二个参数代表要提取的字符串的长度
+				
+				
+				
+			(二) str.substring(n)
+			用法与substr类似
+			第一个参数是截取的位数,如
+			var str='abcdefghijklm';
+			str.substring(4); → efghijklm
+			第二位数字不写的情况下,默认是字符串的长度,即str.length
+			如果写第二位参数,如:
+			var str='abcdefghijklm';
+			 		   ↑	    ↑
+					   2	    11
+			var str=str.substring(2,11); → cdefghijk
+			
+			注:截取的字符串不包括第二位数字的字符串本身,这里不包括第11位：'l';
+			
+			
+			(三) str.trim();
+			去掉字符串两端的空格
+			var orig = '   foo  ';
+			console.log(orig.trim()); // 'foo'
+			
+			
+		</p>	
+		<script type="text/javascript">
+			var str='abcdefghijklm';
+			var str=str.substring(2,11)
+			console.log(str);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+//			function fn1(){
+//				alert(1);
+//			}
+//			function fn2(){
+//				alert(2);
+//			}
+//			document.onclick=fn1;
+//			document.onclick=fn2;
+//			
+//			此时的document的点击事件会指向两个函数,分别是fn1和fn2,那么会造成后者覆盖前者的情况
+//			此时,只有fn2会执行
+
+//			解决上面问题的办法:
+			
+			//1.在IE下,用attachEvent的方法解决
+			//document.attachEvent('onclick',fn1);
+			//document.attachEvent('onclick',fn2);
+			
+			
+			取消事件:
+			事件触发时,触发事件的函数有两个,也就是引用到了attachEvent
+			用detachEvent来取消掉 
+			
+//			2.在标准浏览器下,用addEventListener
+//				addEventListener()是标准浏览器下的函数
+//				第一个参数是触发函数的事件名称,如onclick会去掉'on',变成字符串'click';
+//				第二个参数是要执行的函数,如果有参数传递,可以用闭包传参
+//				第三个参数是个布尔值,为false或者true
+//					1:当为true的时候,为事件捕获
+//					2:当为false的时候,为事件冒泡
+//			
+			取消事件监听
+			用removeEventListener('click',fn1)
+				
+				
+
+//			用attachEvent与addEventListener的区别
+//				1.attachEvent
+//					(1)没有捕获
+//					(2)事件名称有on
+//					(3)事件函数执行顺序:标准ie->正序
+//								   非标准ie->倒序
+//					(4)this指向window
+//					
+//				2.addEventListener
+//					(1)有事件捕获
+//					(2)事件名称在使用时,前面没有'on'
+//					(3)时间执行的顺序是正序
+//					(4)this指向触发该事件的对象		   
+//
+//
+//			document.addEventListener('click',fn1,false)
+//			document.addEventListener('click',fn2,false)
+//			
+			
+//				call
+//				函数下的一个方法,相当于函数内的函数
+				function fn(){
+					alert(this);
+				}
+				fn()//fn + ()代表函数执行
+				
+				函数执行的实质是函数内的call()让这个函数执行
+				
+				也就是fn.call()===fn()
+				
+				正常使用的时候是没有区别的,但是call方法的第一个参数可以改变函数在执行过程中***内部this的指向***
+				
+				也就是说fn.call(1),只传一个参数的时候,在这个函数执行的时候,函数内部指向调用函数的this,就变成了1
+				
+				函数的call()方法的作用是:
+				**改变一个函数执行过程中,内部this的指向**
+				
+				当执行时,call()方法中,从第二个参数开始,就是函数传参相对应实参参数
+				注:当call()方法的第一个参数是null时,内部this指向并不为空,而是依旧指向window
+				
+				
+				绑定函数:
+				//obj是要执行fn函数的对象，evname是触发函数执行的事件，如onclick或者onmouseover等，这里就要将'on'去掉，才能执行这个函数，如bind(div,'click',fn1);(div,'click',fn2);
+				//函数功能：让一个对象在触发一个事件时，实现多个功能
+				function bind(obj,evname,fn){
+					if(obj.addEventListener){
+						obj.addEventListener(evname,fn,false);
+					}else{
+						obj.attachEvent('on'+evname,function(){
+							fn.call(obj)
+						})
+					}
+				}
+				
+				//此处如果不用匿名函数包裹，会造成传参的函数自执行的问题
+		</script>
+	</body>
+</html>

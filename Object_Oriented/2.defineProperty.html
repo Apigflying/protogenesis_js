@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var obj={
+				get a(){return 3},
+				get c(){return this.a*4}//12
+			}
+			Object.defineProperty(obj,'b',{
+				get:function(){return this.a*2},//6
+				enumerable:true
+			})
+			console.log(obj)
+		</script>
+	</body>
+</html>

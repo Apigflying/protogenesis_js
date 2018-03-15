@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			1.创建数组的方法：
+				(1)var arr=[1,2,3];
+				
+				(2)var arr=new Array(1,2,3);
+				
+					注：当只传一个数字的时候，代表的是一个长度为这个数组的空数组
+					var arr=new Array(3)  →  length:3
+					
+				(3)var arr=Array.of(1,2,3);
+				
+					注：这里是Array.of()不是Arrayof();
+				
+				
+			2.验证是不是数组的方法：
+				Array.isArray(arr);
+				返回值是true  →  是数组
+					 false  →  不是数组
+					
+					
+			3.类数组转化为数组
+			var lis=document.querySelectAll('li');
+			var str=oP.innerHTML;
+			
+				Array.from(lis);  →  [li,li,li];
+				Array.from(oP);  →  []oP里面的文字组成的数组，组成的数组的长度和原字符串的长度相同
+				
+			...拓展运算符，可以将类数组拆分（兼容性不好）
+			var str='abc';
+			[...str]  →  ['a','b','c']
+			[...lis]  →  ['li','li','li']
+--------------------------------------------------------------------------------------
+			数组的方法：
+			
+			4.数组首尾项的增删		会修改原数组###########
+			push()往数组的最后面添加一项或者多项		→  返回值是添加后的新数组的长度length
+			unshift()往数组的最前面添加一项或者多项	→  返回值是添加后的新数组的长度length
+			pop()删除数组的最后一项				→  返回的是删除的那一项的 *内容*
+			shift()删除数组的第一项				→  返回的是删除的那一项的 *内容*
+			
+			
+			5.数组的重组
+				arr.splice() 	##########会修改原数组##########
+				splice用来分割数组，*返回值*也是数组
+				它有三个参数
+				前两个参数的类型是number
+				(1)只传一个参数的时候，如果传入的是非数字或者0，就从第0位开始截取后面的数组，也就是整个数组，截取过后，返回原数组，而原数组被清空
+					传入的是非0数字,就是从第几位开始截取
+				(2)如果传两位数字
+					那么第二位数字代表的是截取的长度，也就是位数
+					返回的是一个新数组，截取后的数组
+				(3)传入超过两位，返回截取后的数组
+					同时修改原数组，将两位后的参数替换为原数组中的项
+					var arr=[1,2,3,4,5,5,6,7]
+					arr.splice(2,4,4,5,6);	→  [3, 4, 5, 5]
+					arr	→  [1, 2, 4, 5, 6, 6, 7]
+					
+					
+			6.遍历数组
+				(1) 	数组的forEach()方法：
+				
+					传入的第一个参数是回调函数
+						这个函数有两个参数:第一个参数是数组的每一项
+									  第二个参数是这个数组的索引值
+					第二个参数是改变函数内的this指向
+					
+				这个函数会自动执行arr.length次，跟for循环一样
+				
+				如果数组的某一项是空，那么会跳过该索引项
+				
+				不同之处：
+				
+				arr.forEach(function(item,index){
+					console.log(item，index);
+				});
+				
+				这里的item和就是数组中的每一项，index就是for循环中i的值
+				
+				for(var i=0;i<arr.length;i++){
+					console.log(arr[i],i);
+				}
+				上面两种写法最后的结果相同,如果for循环的循环开始是从0
+				那么都可以用forEach()来替代
+				
+				但是forEach不能使用break和continue.但是可以用return替代continue
+				
+				
+				(2) 	数组的map()方法:		
+				用法同forEach(),也是用来遍历数组的,只不过这个map()方法使用完之后有一个返回值
+				可以用变量接收这个返回值
+				var arr=[12,3,'a',4,15,5,6,7,'a',5,6,7,3];
+				var newArr = arr.map(function (item, index, arr){
+			      	map有返回值,这个返回值也是一个数组,它可以操作数组的每一项,例如
+			      	return item+1;
+			      	这样,每次上面的数字都会加1,然后返回一个新数组,这个数组的值就是上面的数组的每一项都+1,但是map不会修改原数组arr
+			      })
+				console.log(newArr)
+				
+				newArr	→  [13, 4, "a1", 5, 16, 6, 7, 8, "a1", 6, 7, 8, 4]
+				
+				console.log(arr)
+				
+				arr	→  [12,3,'a',4,15,5,6,7,'a',5,6,7,3]
+				
+				(3)	 	数组的concat()方法	需要重新赋值,不会改变原数组#############
+					a)	当传入的是用','分割的字符串或者数字时,用法同arr.push(),不同之处在于push()方法添加后,直接修改了元素组,而concat添加过后需要用另一个数组接收(在快排中,返回的数组最后要用一个变量接收就是这个原因);
+						var arr=[1,2,3];
+						
+						arr=arr.concat('a','b');需要重新赋值
+						arr	→  [1,2,3,'a','b'];
+						
+						而push()
+						
+						arr.push('a','b');不需要重新赋值
+						arr	→  [1,2,3,'a','b'];
+						
+					b)	当传入的是一个数组的时候,返回值是  在调用这个方法的数组后面加上传入的另一个数组
+						var arr1=['a','b','c'];
+						var arr2=[1,2,3];
+						var arr=arr1.concat(arr2);
+						arr	→  ['a','b','c',1,2,3];
+						
+					c)	连接多个数组:
+						var arr1=[1,2];
+						var arr2=[3,4];
+						
+						var arr3=[5,6];
+						var arr4=[7,8];
+						
+						console.log(arr1.concat(arr2,arr3,arr4))
+									↓
+						[1, 2, 3, 4, 5, 6, 7, 8]
+						
+						
+				(4) 	数组的reverse()方法		########会修改原数组,不用重新赋值#####
+					颠倒数组项的顺序
+					var arr=[2,3,'a',4,5,5,6,7];
+					arr.reverse();
+					arr	→  [7,6,5,5,4,'a',3,2];
+					注:数组的reverse()方法不用重新赋值,执行过后,就已经改变原数组了
+					
+				(5) 	数组的sort()方法		会修改原数组,不用重新赋值#############
+					修改数组的排序,排序的方式是根据每个数组项的首位进行Unicode编码的比较,排列的方式默认是从小到大
+					a)当数组的每一项都是数字或者有字符串的第一位是数字的时候,会根据每一项的首位数字进行Unicode编码大小比较,然后从小到大排序
+						var arr = [12,3,'a','1',4,15];
+						arr.sort();
+    					arr	 →   ["1", 12, 15, 3, 4, "a"]
+    							   ↑   ↑   ↑   ↑  ↑   ↑
+    							   比较他们的Unicode编码,然后从小到大进行排序
+    							   
+    				b)在sort()可以使用函数,对数字(必须是纯数字,或者带数字的字符串)进行排序
+    					arr.sort(function(a,b){return a-b});(从小到大排序)
+    					arr.sort(function(a,b){return b-a});(从大到小排序)
+    					
+    					var arr = [12,3,'1',4,15,'25','11'];
+    					
+						arr.sort(function(a,b){return a-b});
+						
+    					arr	 →   ["1", 3, 4, "11", 12, 15, "25"]
+    					
+    					上面sort内的函数的意思:
+							选取数组的其中两项进行比较,如果a>b,那么a和b交换位置
+							类似于冒泡排序
+							
+					c)当数组中有非数字的时候,要进行排序,就要用
+						arr.sort().sort(function(a,b){return a-b});
+						
+						var arr = [12,3,'a','1',4,15,'25','11'];
+						   arr.sort().sort(function (a, b){
+							      return a-b;
+							});
+							
+							arr	 →   ["1", 3, 4, "11", 12, 15, "25", "a"]
+							
+				(6) 数组的filter方法
+					遍历数组，筛选出符合规则的数组项，返回一个新数组
+					var newArr=arr.filter(function(item){
+						return typeof item==='string';
+					})
+					挑选出arr中是字符串类型的项，放入到新数组中，返回
+				
+				(7) 数组的fill方法
+					arr.fill(val,startIndex,endIndex)
+							  ↑      ↑         ↑
+						      要替换的值           ↑         ↑ 
+						      	从第几位开始替换           ↑
+						      				直到第几位结束（不包括这个）
+					
+					栗子：
+						var arr=new Array(5);
+						arr.fill(3);
+						arr	 →   [3,3,3,3,3];
+						arr.fill(1,1,3)
+						arr	 →   [3,1,1,3,3];
+				(8) 数组的reduce方法
+					var arr=[4,3,5,6];
+					arr.reduce((a,b)=>{return a*b})
+											  ↓ ↓
+										  arr[0],arr[1]  
+								第一次循环	 →	  4,3 = 12
+													↓
+												 ←
+											  ↓ 
+									  上一次的返回值,arr[2] 
+								第二次循环	 →	 12,5 = 60
+													↓
+												 ←
+											  ↓
+									上一次的返回值,arr[3] 
+								第二次循环	 →	 60,6 = 360
+											  ...
+											  ↓
+									最后返回最后一次的返回值
+				
+--------------------------------------------------------------------------------------
+				数组去重的方法
+				1.
+				arr.forEach(function(item,i){
+					if(brr.indexOf(item)==-1){
+						brr.push(item)
+					}
+				})
+				2.
+				var set=new Set(arr);
+				console.log([...set])
+				
+-----------------------------------------------------------------------------
+			数组的方法
+				会修改原数组的方法:
+				arr.push();------------返回值是新数组的长度
+				arr.unshift();---------返回值是新数组的长度
+				arr.pop();-------------返回值是被删除的那一项
+				arr.shift();-----------返回值是被删除的那一项
+				
+				arr.splice();----------返回值是在原数组中被截取掉的项组成的数组
+				arr.reverse();---------返回值就是原数组反向排列的数组
+				
+				
+			
+
+		</p>
+		<script type="text/javascript">
+//			var str='sdfdsagsd'
+//			var arr=Array.from(str);
+//			console.log(arr.length)
+//			console.log(str.length)
+			var arr=[1,2,3,4,5,5,6,7]
+//			arr.splice(2,4,4,5,6);	→  [3, 4, 5, 5]
+//			arr	→  [1, 2, 4, 5, 6, 6, 7]
+//			arr.forEach(function(item,index){
+//				console.log(item);
+//			});
+//			for(var i=0;i<arr.length;i++){
+//				console.log(arr[i]);
+//			}
+//			for(var i in arr){
+//				console.log(arr[i])
+//			}
+//			var arr1=arr.concat(1);
+//			arr.reverse();
+//			console.log(arr)
+//			arr.sort(function(a,b){return a-b});
+			
+//			var brr=[];
+//			arr.forEach(function(item,i){
+//				if(brr.indexOf(item)==-1){
+//					brr.push(item)
+//				}
+//			})
+//			console.log(brr)
+//			var set=new Set(arr);
+//			console.log([...set])
+
+//			var arr=[12,3,'a',4,15,5,6,7,'a',5,6,7,3];
+//			var newArr = arr.map(function (item, index, arr){
+//			      //console.log(item, index);
+//			      return item+1;})
+//			console.log(newArr)
+//			console.log(arr)
+
+
+//			var arr1=[1,2];
+//			var arr2=[3,4];
+//			
+//			var arr3=[5,6];
+//			var arr4=[7,8];
+//			
+//			console.log(arr1.concat(arr2,arr3,arr4))
+//			
+//			[1, 2, 3, 4, 5, 6, 7, 8]
+			var arr=[1,2,3,4,5,6];
+//			
+			arr.forEach(function (item,index){
+				if(index==1){
+					return;
+				}
+				item++;
+				console.log(item)
+			})
+			console.log(arr)
+//			for (var i = 0; i <arr.length; i++) {
+//				if(i==1){continue};
+//				arr[i]++
+//			}
+//			console.log(arr)
+		</script>
+	</body>
+</html>

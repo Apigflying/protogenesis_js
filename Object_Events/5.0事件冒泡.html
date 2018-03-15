@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#div1{
+				width:500px;
+				height:500px;
+				background: red;
+			}
+			#div2{
+				width:400px;
+				height:400px;
+				background: green;
+			}
+			#div3{
+				width:300px;
+				height:300px;
+				background: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<div id="div2">
+				<div id="div3"></div>
+			</div>
+		</div>
+		<!--点击div的时候，弹出当前盒子的id-->
+		<script type="text/javascript">
+			var div1=document.getElementById('div1');
+			var div2=document.getElementById('div2');
+			var div3=document.getElementById('div3');
+			function fn(){
+				alert(this.id)
+			}
+			div3.onclick=fn;
+			div2.onclick=fn;
+			div1.onclick=fn;
+//			div3点击的时候,会弹出三次
+			//如果将上面的两个div1和div2的点击事件注释掉,此时不会弹出三次,但是div1和div2都接收到了fn这个函数,但是没有事件触发也就是'onclick'事件,则什么都不会显示
+			
+			
+			
+			//阻止冒泡时间的方法:给当前会影响到其祖先元素事件的元素在触发该事件的函数内添加ev.cancelBubble=true;
+			
+		</script>
+	</body>
+</html>

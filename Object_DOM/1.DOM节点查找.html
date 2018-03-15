@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+			1.DOM的基本概念
+				html中元素在DOM中就是一堆节点（node），每个元素节点都有childNodes这个属性，用来查看这个元素节点的所有子节点
+			用childNodes查看元素的子节点，得到的是节点类型：text（文本节点、comment（注释节点）、div（元素节点）
+			可以通过nodeType（不同于typeof，它不是一元操作符） 查看节点的类型，返回值是数字
+			// - 元素节点 对应数字 1 #Element null
+            // - 属性节点 对应数字 2 #attr value
+            // - 文本节点 对应数字 3 #text value
+            // - 注释节点 对应数字 8 #comment value
+            // - 文档节点 对应数字 9 #document null
+            
+            
+            2.获取节点的方法
+            	ele.firstchild 	→ 	元素的第一个子节点（不一定是元素子节点，如果有换行符，那么就是文本节点）
+            	ele.nextSibling 	→ 	元素的下一个兄弟节点
+            	ele.previousSibling 	→ 	元素的上一个兄弟节点
+            	ele.lastChild	→ 	元素的最后一个子节点
+            	
+            	
+            	ele.parentNode	→ 	获取元素的父节点		****比较常用
+            	
+            3.元素身上的属性节点
+            	ele.attributes[0]
+            		↓
+            	可以通过这种方法，拿到元素内的第一个属性如：id="box";
+            	ele.attributes[0].nodeName	→ 	id
+            	ele.attributes[0].nodeValue	→ 	box
+            	
+            4.用变量保存一组DOM元素，当元素被删除，或者添加和修改时，那么变量也会改变，类似于arr
+            	栗子：
+            		var arr=[1,2,3];
+            		var arr2=arr;
+            		arr2.splice(0,1)
+            		arr	→ 	[2,3]
+            		
+            		var childs = box.children;
+            		box.innerHTML='';
+            		console.log(childs)	→ 	[]
+            		
+            5.DOM常用属性
+            	document.documentElement	→ 	html
+            	document.body	→ 	body
+            	document.title	→ 	title(可读可写)
+            	
+            6.获取元素节点
+            	ele.firstElementChild	→ 	获取元素内第一个元素节点
+				ele.lastElementChild	→ 	获取元素内最后一个元素子节点
+				ele.nextElementSibling	→ 	获取元素下一个兄弟节点
+				ele.previousElementSibling	→ 	获取元素上一个兄弟节点
+            
+			
+		</p>
+		<div class="vv" id="box" style="font-size: 36px;">123
+			<!--我就是注释-->
+			<div></div>
+		</div>
+		<script type="text/javascript">
+			var box=document.getElementById('box');
+			console.log([...box.childNodes])
+			
+		</script>
+	</body>
+</html>

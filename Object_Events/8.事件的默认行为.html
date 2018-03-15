@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				margin:0;
+				padding:0;
+				height:2000px;
+			}
+			#box{
+				width:100px;
+				height:200px;
+				border:1px solid red;
+				position:absolute;
+				display: none;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<p>
+			事件默认行为：当一个时间发生的时候浏览器自己会默认做的事
+			
+			如：
+			点击右键，有右键菜单
+			当页面高度很高时，按空格，就能够自动向下跳转
+			
+			阻止事件的默认行为：
+			
+			当前这个行为是什么事件触发的，然后在这个事件的处理函数中使用return false
+			
+			
+			右键菜单事件：
+			<!--
+				
+			context:上下文，背景，环境，语境的意思
+			
+			-->
+			oncontextmenu：右键菜单事件--当右键菜单（环境菜单，随着环境改变而改变的菜单。上下文菜单）显示出来的时候触发的
+			
+			
+			自定义右键菜单
+		</p>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var box=document.getElementById('box');
+//			document.onkeydown=function(){
+//				return false;
+//			}
+			document.oncontextmenu=function(ev){
+				var ev=ev||event;
+				box.style.display='block';
+				box.style.left=ev.clientX+'px';
+				box.style.top=ev.clientY+'px';
+				return false;
+			}
+			document.onclick=function(){
+				box.style.display='none';
+			}
+		</script>
+	</body>
+</html>

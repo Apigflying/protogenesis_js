@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>用原型写选项卡</title>
+  <style>
+  	.active{
+  		background: red;
+  	}
+  	
+  	
+  	#show div{
+  		width:100px;
+  		height:100px;
+  		border:1px solid #000000;
+  		line-height: 100px;;
+  		font-size: 40px;
+  		text-align: center;
+  		position: absolute;
+  		display: none;
+  	}
+  </style>
+  <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+ 	<script type="text/javascript">
+ 		
+ 		window.onload=function (){
+ 			//创建对象
+ 			var obj=new Tab();
+ 			//这个对象有两个属性，ct和sw，也有两个方法：init和change
+ 			obj.init();}
+ 		function Tab(){
+ 				this.ct=document.getElementById("ctrl").children;
+ 				this.sw=document.getElementById ("show").children;
+ 				//this.init=function(){}
+ 				//this.change=function(){}
+ 		}
+ 		Tab.prototype.init=function(){
+ 			var _this=this;//this指向对象，将这个this保存起来
+ 			//这里能访问到this.ct
+ 			for (var i = 0; i < this.ct.length; i++) {
+ 				this.ct[i].index=i;
+ 				//事件触发函数和定时器触发函数，会造成this的指向改变
+ 				//当onclick事件触发的时候，obj身上的change方法（函数）    内的this就指向了事件的触发者，而不是指向obj了
+ 				this.ct[i].onclick=function (){
+ 					//将事件函数包裹起来，因为这里的this指向函数的调用者，而input
+ 					//外面的this指向obj
+ 					_this.change(this);
+ 					//obj.change(input[i])
+ 				}
+ 				
+ 				
+ 			}
+ 		}
+ 		Tab.prototype.change=function(_this){
+ 			//当这个函数是被事件调用的时候，这里this的指向是事件的调用者 ，即：谁触发了这个函数，那么this就指向谁(DOM元素)
+ 			for (var i = 0; i < this.sw.length; i++) {
+				this.ct[i].classList.remove('active');
+				this.sw[i].style.display='none';
+			}
+ 			console.log(this)
+ 			_this.classList.add('active');
+			this.sw[_this.index].style.display='block';
+ 		}
+ 	</script>
+</head>
+<body style="height:3000px">
+	
+		<div id="ctrl">
+			<input class="active" type="button" value="111" />
+			<input type="button" value="222" />
+			<input type="button" value="333" />
+		</div>
+		<div id="show">
+			<div style="display: block;">111</div>
+			<div>222</div>
+			<div>333</div>
+		</div>
+		
+	 
+</body>
+</html><!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>

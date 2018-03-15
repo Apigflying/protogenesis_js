@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试专用</title>
+  <style>
+  	div{
+  		width:100px;
+  		height:100px;
+  		background: red;
+  		position:absolute;
+  		line-height:100px;
+  		text-align:center;
+  		font-size:40px;
+  		color:yellow;
+  	}
+  </style>
+  <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+</head>
+<body style="">
+		<div id="box">111</div>
+			<div id="box2">222</div>
+	  <script type="text/javascript">
+	  	
+			 function Drag(id){
+			 		this.box=document.getElementById(id);
+			 		this.x=0;
+			 		this.y=0;
+			 		this.init();
+			 }
+				Drag.prototype={
+				 		instructor:Drag,
+				 		init:function (){
+					 		var that=this;
+					 		this.box.onmousedown=function(e){
+					 				that.fnDown(e);
+					 		}
+					 	},
+						 fnDown:function(e){
+						 	e.preventDefault();
+						 		this.x=e.pageX-this.box.offsetLeft;
+						 		this.y=e.pageY-this.box.offsetTop;
+						 		var that=this;
+						 		document.onmousemove=function(e){
+						 				that.fnMove(e);
+						 		}
+						 		document.onmouseup=function(){
+						 				that.fnUp();
+						 		}
+						 	
+						 },
+						 fnMove:function(e){
+						 	e.preventDefault();
+						 		this.l=e.pageX-this.x;
+						 		this.t=e.pageY-this.y;
+						 		
+						 		this.box.style.left=this.l+'px';
+						 		this.box.style.top=this.t+'px';
+						 		return false;
+						 },
+						 fnUp:function(){
+						 		document.onmousemove=document.onmouseup=null;
+						 }
+				 }
+				function inherit(child,parent){
+				    function O(){};
+				    O.prototype=parent;
+				    child.prototype=new O;//将子类的prototype指向这个新的对象
+				    child.prototype.constructor=child;//修改原型指向
+				    return  child.prototype;//返回这个对象，后续可以给它添加方法,这想法太天真了，如果保存的话，那么就成了给对象添加方法，this就变成了这个对象
+				}
+	  		function LimitBox(ele){
+	  			console.log(ele)
+	  			Drag.call(this,ele)//复制属性
+	  		}
+	  		inherit(LimitBox,Drag.prototype)//复制父类的方法,
+				
+				LimitBox.prototype.limit=function(flag){
+					if(flag){
+						console.log(this.x,this.y)
+						if(this.l<=0){
+							this.l=0;
+						};
+						if(this.t<=0){
+							this.t=0
+						}if(this.l>=window.innerWidth-this.box.offsetWidth){
+							this.l=window.innerWidth-this.box.offsetWidth
+						}if(this.t>=window.innerHeight-this.box.offsetHeight){
+							this.t=window.innerHeight-this.box.offsetHeight;
+						}
+					}
+				}
+				LimitBox.prototype.fnMove = function (e){
+					this.l = e.pageX - this.x;
+					this.t  = e.pageY - this.y;
+	
+					this.limit(true);
+					this.box.style.left = this.l + "px";
+					this.box.style.top = this.t + "px";		
+				};
+			   var box1=new Drag('box');
+				 var box2=new LimitBox('box2');
+				 console.log(LimitBox.prototype)
+ 		</script>
+</body>
+</html>

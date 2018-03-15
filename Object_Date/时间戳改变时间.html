@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+		1.new Date()在没有参数的情况下
+		
+		new Date()：获取当前这句代码执行时候的时间，获取一次就不会再改变，除非用变量保存后，重新再次赋值
+				         常用在定时器内，每次都重新获得当前的时间，用给一个变量去储存
+				         例如：
+				         	var nowTime=new Date() → 只会获取一次
+				         	
+				         	下面的代码会在每次执行的时候获取当前的时间
+				         var timer=setInterval(function(){
+				         	var nowTime=new Date()
+				         },20) → 每20毫秒重新获取一次当前时间
+		
+		2.new Date()在有参数的时候分为两种情况
+			（1）参数类型为字符串：
+				new Date('2017 3 2 12:12:12') 
+				= new Date('3 2 2017 12:12:12')
+				= new Date('Mar 2 2017 12:12:12') → 2017年3月2日12:12:12
+			（2）参数类型为数字：
+				new Date(2017,2,14,12,12,34) → 2017年3月2日12:12:12
+				
+				***月份需要特别注意：数字的月份从0开始计算***
+				1月     	2月  	 	 3月   ... 	12月
+				 0   	 1   	  2 	 	 11
+		
+		---------------------------------------------------------------
+		
+		- getTime()：时间戳，获取1970年1月1日00:00:00到   当前时间   之差  的   ***毫秒数***
+		
+		它是newDate()的方法：
+			获取时间戳的两种方法：
+			
+		1.	var t=new Date().getTime() → 1487063724300(单位是：毫秒)
+		
+		2. 	var t=Date.now() → 1487063979697
+		
+		
+		- setFullYear(yyyy[,month[,dd]]) : 用来设定指定日期对象的年份、（月份、日期）
+		- setMonth(month[,dd]); ： 用来设置指定日期对象月份的（、日期）
+		- setDate(dd) ： 用来设定指定日期对象的日期的
+		- setHours(hh[,mm[,ss[,ms]]]) ： 用来设定当前日期对象小时（分钟、秒钟、毫秒）
+		- setMinutes(mm[,ss[,ms]]) ： 用来设定当前日期对象的分钟（秒钟、毫秒）
+		- setSeconds(ss[,ms]) ： 用来设定当前日期对象的秒钟（毫秒）
+		- setMilliseconds(ms) ： 用来设定当前日期对象的毫秒
+		  
+		  用setMonth()改变月份的时候，也是从0开始的
+		  
+		  
+		**** 当用set方法改变时间的时候，其   返回值   是：从  * 设置的时间 （改变后的时间值）  * 到   时间戳 (1970年1月1日)
+		的时间的差值
+		
+		用当前时间减去这个时间戳，就可以得到当前时间到设置时间的差值****
+		  
+		  栗子：
+		  var t=new Date();  →  t储存当前时间
+		  var n=t.getTime(); → n储存  当前时间  到  时间戳  的差值
+		  var m=t.setMinutes(49); →  m储存  设置时间  到  时间戳  的差值
+		  console.log(n-m); →  设置时间     与     当前时间    的    差值
+		  （如果只改变一个如：minutes那么差值一定是60000的整数倍。两个时间戳的秒数一直相同）
+		  
+		  
+		- getFullYear() ： 用来获取当前日期对象的年份
+		- getMonth() ： 用来获取当前日期对象的月份（月份是从0开始的，例如1代表2月份）
+		- getDate() ： 用来获取当前日期对象的日期
+		- getDay() ： 获取当前日期对象的星期几，注意星期日是0
+		- getHours() ： 获取当前日期对象的小时
+		- getMinutes() ： 获取当前日期对象的分钟
+		- getSeconds() ： 获取当前日期对象的秒钟
+		- getMilliseconds() ： 获取当前日期对象的毫秒
+---------------------------------------------------------
+		时间版运动的原理：
+			var t1=Date.now();设置时间戳
+			
+			setInterval(function(){
+				var t2=Date.now();
+				s*(t2-t1)/diraction+begin
+			},200)
+		
+		
+		时间戳：
+		从1970年1月1日 8:00开始，到当前时间的毫秒数
+		可以写成：
+		
+		var date=new Date('1970 1 1 8:00')
+		
+		date.getTime()
+		
+		0
+		
+		时间戳的表示方法：
+		1.new Date().getTime()
+		2.Date.now()
+		3.+new Date()
+		
+		
+		new Date().getTime()==Date.now()
+		true
+		+new Date()==Date.now()
+		true	
+		
+		</p>	
+	</body>
+</html>
